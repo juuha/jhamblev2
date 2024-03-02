@@ -1,0 +1,11 @@
+{
+  "name": "jhamblev2",
+  "version": "1.0.0",
+  "description": "Version 2 of Jhamble - A Guild Wars 2 ectogamblign simulator bot for Discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Juuha",
+  "license": "ISC"
+}
