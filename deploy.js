@@ -18,7 +18,7 @@ for (const file of commandFiles) {
 }
 
 
-const rest = new REST().setToken(token)
+const rest = new REST().setToken(token);
 
 (async () => {
 	try {
