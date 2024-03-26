@@ -30,7 +30,7 @@ module.exports = {
                 .setMinValue(1)
                 .setMaxValue(20)
                 .setDescription("Amount of Gambles you want to do. 1-20.")),
-	async execute(interaction, client, inside_job = false, count = 1, user) {
+	async execute(interaction, client, inside_job = false, count = 1, user, stolen_message = false) {
         let gambles = `Gambled 1 time!`;
         if (inside_job) {
             gambles = `Gambled ${count} times!`;
@@ -195,14 +195,16 @@ module.exports = {
             .setTitle(`${emojis.ecto} Ectogamble!`)
             .setColor(color)
             .setDescription(`${gambler.name} receives:\n**${gold}** & **${ecto}**\n${gambles} Total value: ${gold_value}${emojis.gold} & ${ecto_value}${emojis.ecto}.\n\nCurrent balance: \n**${gambler.gold}** ${emojis.gold} ${gold_difference}\n **${gambler.ecto}** ${emojis.ecto} ${ecto_difference}\n\nReact to gamble again! ${emojis.ecto} = 1 gamble, ${emojis.glob} = 2, ${emojis.crystal} = 5, ${emojis.asc_glob} = 10, ${emojis.orb} = 20. React with ${emojis.balance} to balance!`);
-        if (inside_job) {
-            try {
-                interaction.message.edit({ embeds: [embed] });
-            } catch (error) { console.log(error) }
-        } else {
-            try {
-                interaction.reply({ embeds: [embed] });
-            } catch (error) { console.log(error) }
-        }
+        try {
+            if (inside_job) {
+                if (stolen_message) {
+                    interaction.message.channel.send({ embeds: [embed] });
+                } else {
+                    interaction.message.edit({ embeds: [embed] });
+                }
+            } else {
+                    interaction.reply({ embeds: [embed] });
+            }
+        } catch (error) { console.log(error) }
 	},
 };
