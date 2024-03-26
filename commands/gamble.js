@@ -30,11 +30,12 @@ module.exports = {
                 .setMinValue(1)
                 .setMaxValue(20)
                 .setDescription("Amount of Gambles you want to do. 1-20.")),
-	async execute(interaction, client, inside_job = false, count = 1) {
+	async execute(interaction, client, inside_job = false, count = 1, user) {
         let gambles = `Gambled 1 time!`;
         if (inside_job) {
             gambles = `Gambled ${count} times!`;
         } else {
+            user = interaction.user;
             count = interaction.options.getInteger("count");
             count = count ? count : 1
             if (count > 1) {
@@ -42,7 +43,7 @@ module.exports = {
             }
         }
 
-        let gambler = await init_gambler(client, interaction.user)
+        let gambler = await init_gambler(client, user)
         let emojis = await init_emojis(client)
         let error_message = ``
         let free_roll = false
@@ -57,11 +58,15 @@ module.exports = {
         }
 
         if (gambler.ecto < 250 * count) {
-            error_message = `You need at least ${250 * count} ${emojis.ecto}, you have only ${gambler.ecto} ${emojis.ecto}.`
+            error_message = `Sorry ${gambler.name}, you need at least ${250 * count} ${emojis.ecto}, but you have only ${gambler.ecto} ${emojis.ecto}.`;
         }
 
         if (gambler.gold < 100 * count) {
-            error_message += `\nYou need at least ${100 * count} ${emojis.gold}, you have only ${gambler.gold} ${emojis.gold}.`
+            if (error_message) {
+                error_message += `\nYou also need at least ${100 * count} ${emojis.gold}, but you have only ${gambler.gold} ${emojis.gold}.`;
+            } else {
+                error_message = `Sorry ${gambler.name}, you need at least ${100 * count} ${emojis.gold}, but you have only ${gambler.gold} ${emojis.gold}.`;
+            }
         }
 
         if (error_message) {
@@ -69,10 +74,20 @@ module.exports = {
                 gambler.ecto -= 250
                 gambler.gold -= 100
             }
-            try {
-                await interaction.reply(error_message)
-            } catch (error) { console.log(error) }
-            return
+            if (inside_job) {
+                try {
+                    const sent = await interaction.message.channel.send(error_message);
+                    setTimeout(() => {
+                        sent.delete({ timeout: 10000 })
+                    }, 10000);
+                    return;
+                } catch (error) { console.error(error) }
+            } else {
+                try {
+                    await interaction.reply(error_message);
+                } catch (error) { console.error(error) }
+                return;
+            }
         }
 
         gambler.ecto -= 250 * count
@@ -182,7 +197,7 @@ module.exports = {
             .setDescription(`${gambler.name} receives:\n**${gold}** & **${ecto}**\n${gambles} Total value: ${gold_value}${emojis.gold} & ${ecto_value}${emojis.ecto}.\n\nCurrent balance: \n**${gambler.gold}** ${emojis.gold} ${gold_difference}\n **${gambler.ecto}** ${emojis.ecto} ${ecto_difference}\n\nReact to gamble again! ${emojis.ecto} = 1 gamble, ${emojis.glob} = 2, ${emojis.crystal} = 5, ${emojis.asc_glob} = 10, ${emojis.orb} = 20. React with ${emojis.balance} to balance!`)
         if (inside_job) {
             try {
-                interaction.content.edit({ embeds: [embed] });
+                interaction.message.edit({ embeds: [embed] });
             } catch (error) { console.log(error) }
         } else {
             try {

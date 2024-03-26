@@ -1,9 +1,13 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, Partials } = require('discord.js');
 const { token } = require('./config.json');
+const init_emojis = require("./functions/init_emojis");
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ 
+	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions],
+	partials: [Partials.Message, Partials.Channel, Partials.Reaction]
+});
 
 client.commands = new Collection();
 
@@ -45,6 +49,75 @@ client.on(Events.InteractionCreate, async interaction => {
 			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 		}
 	}
+});
+
+client.on(Events.MessageReactionAdd, async (reaction, user) => {
+	// Fetch partial reaction.
+	if (reaction.partial) {
+		try {
+			await reaction.fetch();
+		} catch (error) {
+			console.error('Something went wrong when fetching the message:', error);
+			return;
+		}
+	}
+
+	if (user.id === client.user.id) return;
+
+	const emojis = await init_emojis(client);
+	const embed = reaction.message.embeds[0];
+
+	if (reaction.message.author.id === client.user.id) {
+		if (embed.color == 0x9FE2BF || embed.color == 0xff7f7f) {
+            let count = 1;
+            let command = "gamble";
+			let emoji = reaction.emoji.id ? reaction.emoji : reaction.emoji.name;
+
+			switch (emoji) {
+				case emojis.ecto:
+				case "🎲":
+					count = 1;
+					break
+				case emojis.glob:
+				case "🔅":
+					count = 2;
+					break;
+				case emojis.crystal:
+				case "💎":
+					count = 5;
+					break;
+				case emojis.asc_glob:
+				case "🔆":
+					count = 10;
+					break;
+				case emojis.orb:
+				case "🔮":
+					count = 20;
+					break;
+				default:
+					return;
+			}
+			
+            let globalName = embed.data.description.split("\n")[0];
+            globalName = globalName.substring(0, globalName.length - 10);
+			let stolen_message = false;
+			if (user.globalName != globalName) {
+				stolen_message = true;
+			}
+
+            const reactionUserManager = reaction.users;
+            try {
+                await reactionUserManager.remove(user);
+            } catch (error) { console.log(error) }
+            
+			switch (command) {
+				case "gamble":
+					client.commands.get('gamble').execute(reaction, client, inside_job = true, count, user, stolen_message);
+					break;
+			}
+            
+        }
+	}	
 });
 
 client.login(token);
