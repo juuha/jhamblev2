@@ -5,7 +5,7 @@ module.exports = async (client, gambler) => {
     if (!gamblers[gambler.id]) {
         gamblers[gambler.id] = {
             id: gambler.id,
-            name: gambler.globalName,
+            name: gambler.globalName || gambler.username,
             ecto: 1250,
             gold: 500,
             free: 18706,
