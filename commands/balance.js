@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const init_emojis = require("../functions/init_emojis")
 const init_gambler = require("../functions/init_gambler")
 const update_gambler = require("../functions/update_gambler")
