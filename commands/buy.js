@@ -31,8 +31,9 @@ module.exports = {
 
         await update_gambler(gambler);
 
+        let message = `${amount} ${emojis.ecto} bought for ${amount * price} ${emojis.gold}.`;
         try {
-            await interaction.reply({ content: `${amount} ${emojis.ecto} bought for ${amount * price} ${emojis.gold}.`, ephemeral: true });
+            await interaction.reply({ content: message, ephemeral: true });
         } catch (error) { console.error(error) }
     }
 }
