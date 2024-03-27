@@ -30,6 +30,7 @@ module.exports = {
                 .setMinValue(1)
                 .setMaxValue(20)
                 .setDescription("Amount of Gambles you want to do. 1-20.")),
+    // interaction is a Discord.MessageReaction when inside_job = true, otherwise it is a Discord.Interaction
 	async execute(interaction, client, inside_job = false, count = 1, user, stolen_message = false) {
         let gambles = `Gambled 1 time!`;
         if (inside_job) {
