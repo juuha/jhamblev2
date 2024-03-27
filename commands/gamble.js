@@ -26,7 +26,7 @@ module.exports = {
 		.setName('gamble')
 		.setDescription('Does an ecto gamble or a specified amount at once. Max 20.')
         .addIntegerOption(option =>
-            option.setName("count")
+            option.setName("amount")
                 .setMinValue(1)
                 .setMaxValue(20)
                 .setDescription("Amount of Gambles you want to do. 1-20.")),
@@ -37,7 +37,7 @@ module.exports = {
             gambles = `Gambled ${count} times!`;
         } else {
             user = interaction.user;
-            count = interaction.options.getInteger("count");
+            count = interaction.options.getInteger("amount");
             count = count ? count : 1;
             if (count > 1) {
                 gambles = `Gambled ${count} times!`;
