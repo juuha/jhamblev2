@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
-const init_emojis = require("../functions/init_emojis")
-const init_gambler = require("../functions/init_gambler")
-const update_gambler = require("../functions/update_gambler")
+const init_emojis = require("../functions/init_emojis");
+const init_gambler = require("../functions/init_gambler");
+const update_gambler = require("../functions/update_gambler");
 
 module.exports = {
 	data: new SlashCommandBuilder()
