@@ -51,9 +51,3 @@ module.exports = {
         } catch (error) { console.error(error) }
     }
 }
-
-module.exports.help = {
-    name: "balance",
-    short: "bal",
-    alt: "even"
-}
