@@ -31,7 +31,7 @@ module.exports = {
         }
 
         if (gambler.crafted_jhemonade) {
-            info += `\nTotal crafted: ${emojis.jhemonade}: ${gambler.crafted_jhemonade}`;
+            info += `\nTotal crafted ${emojis.jhemonade}: ${gambler.crafted_jhemonade}`;
         }
 
         const embed = new EmbedBuilder()
