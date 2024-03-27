@@ -11,7 +11,8 @@ module.exports = async (client, gambler) => {
             free: 18706,
             gambles: 0,
             orb: 0,
-            jhemonade: 0
+            jhemonade: 0,
+            crafted_jhemonade: 0
         }
         fs.writeFile('./gamblers.json', JSON.stringify(gamblers, null, 4), async (error) => {
             if (error) console.error(error);
