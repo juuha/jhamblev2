@@ -29,7 +29,7 @@ client.once(Events.ClientReady, readyClient => {
 	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 });
 
-client.on(Events.InteractionCreate, async interaction => {
+client.on(Events.InteractionCreate, async (interaction, user) => {
 	if (!interaction.isChatInputCommand()) return;
 
 	const command = interaction.client.commands.get(interaction.commandName);
@@ -40,7 +40,7 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 
 	try {
-		await command.execute(interaction, client);
+		await command.execute(interaction, client, user);
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {
@@ -94,6 +94,9 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
 				case "🔮":
 					count = 20;
 					break;
+				case "⚖️":
+					command = "balance";
+					break;
 				default:
 					return;
 			}
@@ -114,6 +117,11 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
 				case "gamble":
 					client.commands.get('gamble').execute(reaction, client, inside_job = true, count, user, stolen_message);
 					break;
+				case "balance":
+					client.commands.get('balance').execute(reaction, client, inside_job = true, user, stolen_message)
+					break;
+				default:
+					return;
 			}
             
         }
