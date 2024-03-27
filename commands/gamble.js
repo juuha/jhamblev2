@@ -24,12 +24,12 @@ ecto:
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('gamble')
-		.setDescription('Does an ecto gamble or a specified amount at once. Max 20.')
+		.setDescription('Ectogamble! By default does 1 roll.')
         .addIntegerOption(option =>
             option.setName("amount")
                 .setMinValue(1)
                 .setMaxValue(20)
-                .setDescription("Amount of Gambles you want to do. 1-20.")),
+                .setDescription("How many times you want to gamble. 1-20.")),
     // interaction is a Discord.MessageReaction when inside_job = true, otherwise it is a Discord.Interaction
 	async execute(interaction, client, inside_job = false, count = 1, user, stolen_message = false) {
         let gambles = `Gambled 1 time!`;
