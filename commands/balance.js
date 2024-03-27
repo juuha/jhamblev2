@@ -6,7 +6,7 @@ const update_gambler = require("../functions/update_gambler");
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('balance')
-		.setDescription('Automatically sell or buy Ectos, so that your Gold and Ectos are balanced.'),
+		.setDescription('Automatically sell or buy Ectos, so that your Gold and Ectos are  cleanly balanced.'),
         // interaction is a Discord.MessageReaction when inside_job = true, otherwise it is a Discord.Interaction
 	async execute(interaction, client, inside_job = false, user) { 
         if (!inside_job) {
