@@ -25,8 +25,8 @@ module.exports = {
 
         if (error_message) {
             try {
-                const sent = await interaction.reply({ content: error_message, ephemeral: true });
-            } catch (error) { console.log(error) }
+                await interaction.reply({ content: error_message, ephemeral: true });
+            } catch (error) { console.error(error) }
             return
         }
 
@@ -37,7 +37,7 @@ module.exports = {
         await update_gambler(gambler);
 
         try {
-            const sent = await interaction.reply(`${interaction.user.globalName} crafted ${count} ${emojis.jhemonade}!`);
-        } catch (error) { console.log(error) }
+            await interaction.reply(`${interaction.user.globalName} crafted ${count} ${emojis.jhemonade}!`);
+        } catch (error) { console.error(error) }
     }
 }

@@ -112,7 +112,7 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
             const reactionUserManager = reaction.users;
             try {
                 await reactionUserManager.remove(user);
-            } catch (error) { console.log(error) }
+            } catch (error) { console.error(error) }
             
 			switch (command) {
 				case "gamble":

@@ -49,7 +49,7 @@ module.exports = {
             let error_message = `You can't give what you don't have! You only have ${gambler[what]} ${emojis[what]}!`;
             try {
                 await interaction.reply({ content: error_message, ephemeral: true });
-            } catch (error) { console.log(error) }
+            } catch (error) { console.error(error) }
             return;
         }
 
@@ -61,7 +61,7 @@ module.exports = {
 
         let success_message = `${gambler.name} gave <@${receiver.id}> ${amount} ${emojis[what]}!`;
         try {
-            sent = await interaction.reply(success_message);
+            await interaction.reply(success_message);
         } catch (error) { console.error(error) }
     }
 }

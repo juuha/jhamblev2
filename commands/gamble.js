@@ -75,20 +75,17 @@ module.exports = {
                 gambler.ecto -= 250;
                 gambler.gold -= 100;
             }
-            if (inside_job) {
-                try {
+            try {
+                if (inside_job) {
                     const sent = await interaction.message.channel.send(error_message);
                     setTimeout(() => {
-                        sent.delete({ timeout: 10000 })
+                        sent.delete();
                     }, 10000);
-                    return;
-                } catch (error) { console.error(error) }
-            } else {
-                try {
+                } else {
                     await interaction.reply(error_message);
-                } catch (error) { console.error(error) }
-                return;
-            }
+                }
+            } catch (error) { console.error(error) }
+            return;
         }
 
         gambler.ecto -= 250 * count;
@@ -212,6 +209,6 @@ module.exports = {
                     await message.react(emojis.orb);
                     await message.react(emojis.balance);
             }
-        } catch (error) { console.log(error) }
+        } catch (error) { console.error(error) }
 	},
 };

@@ -32,7 +32,7 @@ module.exports = {
             let error_message = `You only have ${gambler[what]} ${emojis[what]}.`;
             try {
                 await interaction.reply({ content: error_message, ephemeral: true });
-            } catch (error) { console.log(error) }
+            } catch (error) { console.error(error) }
             return;
         }
 
@@ -45,7 +45,7 @@ module.exports = {
 
         let message = `${amount} ${emojis[what]} sold for ${amount * price[what]} ${emojis.gold}.`;
         try {
-            const sent = await interaction.reply({ content: message, ephemeral: true });
+            await interaction.reply({ content: message, ephemeral: true });
         } catch (error) { console.error(error) }
     }
 }
