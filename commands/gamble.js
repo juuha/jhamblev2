@@ -204,7 +204,13 @@ module.exports = {
                     interaction.message.edit({ embeds: [embed] });
                 }
             } else {
-                    interaction.reply({ embeds: [embed] });
+                    const message = await interaction.reply({ embeds: [embed], fetchReply: true });
+                    await message.react(emojis.ecto);
+                    await message.react(emojis.glob);
+                    await message.react(emojis.crystal);
+                    await message.react(emojis.asc_glob);
+                    await message.react(emojis.orb);
+                    await message.react(emojis.balance);
             }
         } catch (error) { console.log(error) }
 	},
