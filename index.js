@@ -68,6 +68,7 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
 	const embed = reaction.message.embeds[0];
 
 	if (reaction.message.author.id === client.user.id) {
+		// Only handle reaction based commands if used on gamble messages, where the embed color is either red or green.
 		if (embed.color == 0x9FE2BF || embed.color == 0xff7f7f) {
             let count = 1;
             let command = "gamble";
