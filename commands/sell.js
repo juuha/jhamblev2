@@ -26,7 +26,7 @@ module.exports = {
         let what = interaction.options.getString("what");
         let amount = interaction.options.getInteger("amount");
 
-        let gambler = await init_gambler(client, interaction.user);
+        let gambler = await init_gambler(client, interaction.user, unretire = true);
         let emojis = await init_emojis(client);
 
         if (gambler[what] < amount) {

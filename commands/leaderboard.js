@@ -9,7 +9,7 @@ module.exports = {
 		.setName('leaderboard')
 		.setDescription('Show the ectogambling leaderboard!'),
 	async execute(interaction, client, hall_of_monuments) {
-        let gambler = await init_gambler(client, interaction.user);
+        let gambler = await init_gambler(client, interaction.user, unretire = true);
         let leaderboard = [];
 
         for (let id in gamblers) {

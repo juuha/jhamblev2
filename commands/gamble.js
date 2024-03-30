@@ -45,7 +45,7 @@ module.exports = {
             }
         }
 
-        let gambler = await init_gambler(client, user);
+        let gambler = await init_gambler(client, user, unretire = true);
         let emojis = await init_emojis(client);
         let error_message = ``;
         let free_roll = false;

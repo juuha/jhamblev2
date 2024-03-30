@@ -8,7 +8,7 @@ module.exports = {
 		.setName('me')
 		.setDescription('Show information about your-Ectogambling-self.'),
 	async execute(interaction, client) {
-        let gambler = await init_gambler(client, interaction.user);
+        let gambler = await init_gambler(client, interaction.user, unretire = true);
         let emojis = await init_emojis(client);
         let info = `Gold ${emojis.gold}: ${withCommas(gambler.gold)}\nEctos ${emojis.ecto}: ${withCommas(gambler.ecto)}`;
 

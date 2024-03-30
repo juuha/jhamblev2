@@ -31,26 +31,26 @@ module.exports = {
                 { name: "Jhemonade", value: "jhemonade"},
             )),
 	async execute(interaction, client) {
-        let gambler = await init_gambler(client, interaction.user);
+        let gambler = await init_gambler(client, interaction.user, unretire = true);
         let emojis = await init_emojis(client);
 
         let who = interaction.options.getUser("recipient");
         let amount = interaction.options.getInteger("amount");
         let what = interaction.options.getString("what");
 
-        let receiver = {}
+        let receiver = {};
 
         if (gamblers[who.id]) {
-            receiver = gamblers[who.id]
+            receiver = gamblers[who.id];
         } else {
-            receiver = await init_gambler(client, who)
+            receiver = await init_gambler(client, who);
         }
 
         if (gambler[what] < amount) {
             let error_message = `You can't give what you don't have! You only have ${withCommas(gambler[what])} ${emojis[what]}!`;
             try {
                 await interaction.reply({ content: error_message, ephemeral: true });
-            } catch (error) { console.error(error) }
+            } catch (error) { console.error(error) };
             return;
         }
 

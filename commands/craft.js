@@ -13,7 +13,7 @@ module.exports = {
                 .setMinValue(1)
                 .setDescription("How many Jhemonades you want to craft.")),
 	async execute(interaction, client, count = 1) {
-        let gambler = await init_gambler(client, interaction.user);
+        let gambler = await init_gambler(client, interaction.user, unretire = true);
         let emojis = await init_emojis(client);
 
         count = interaction.options.getInteger("amount");

@@ -1,6 +1,7 @@
 const fs = require('fs');
+const update_gambler = require('./update_gambler');
 
-module.exports = async (client, gambler) => {
+module.exports = async (client, gambler, unretire = false) => {
     let gamblers = require('../gamblers.json');
     if (!gamblers[gambler.id]) {
         gamblers[gambler.id] = {
@@ -19,5 +20,10 @@ module.exports = async (client, gambler) => {
             if (error) console.error(error);
         })
     }
-    return gamblers[gambler.id];
+    let gambler = gamblers[gambler.id];
+    if (unretire) {
+        gambler.retired = false;
+        update_gambler(gambler);
+    }
+    return gambler;
 }

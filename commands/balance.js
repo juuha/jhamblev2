@@ -14,7 +14,7 @@ module.exports = {
             user = interaction.user;
         }
         
-        let gambler = await init_gambler(client, user);
+        let gambler = await init_gambler(client, user, unretire = true);
         let emojis = await init_emojis(client);
         let ecto = gambler.ecto;
 

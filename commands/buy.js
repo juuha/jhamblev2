@@ -15,7 +15,7 @@ module.exports = {
                 .setDescription("How many you want to buy.")),
 	async execute(interaction, client) {
         let amount = interaction.options.getInteger("amount");
-        let gambler = await init_gambler(client, interaction.user);
+        let gambler = await init_gambler(client, interaction.user, unretire = true);
         let emojis = await init_emojis(client);
         let price = 0.4;
 
