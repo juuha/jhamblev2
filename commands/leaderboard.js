@@ -24,7 +24,7 @@ module.exports = {
         }
 
         leaderboard = leaderboard.sort((a, b) => (a.value < b.value) ? 1 : -1);
-        let max = Math.min(2, leaderboard.length);
+        let max = Math.min(5, leaderboard.length);
 
         let user_rank = leaderboard.findIndex(g => g.name === gambler.name) + 1;
         let emojis = await init_emojis(client);
