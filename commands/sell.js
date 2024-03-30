@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const init_gambler = require('../functions/init_gambler.js');
 const update_gambler = require('../functions/update_gambler.js');
 const init_emojis = require("../functions/init_emojis.js");
+const { withCommas } = require('../functions/numbers_with_commas');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -29,7 +30,7 @@ module.exports = {
         let emojis = await init_emojis(client);
 
         if (gambler[what] < amount) {
-            let error_message = `You only have ${gambler[what]} ${emojis[what]}.`;
+            let error_message = `You only have ${withCommas(gambler[what])} ${emojis[what]}.`;
             try {
                 await interaction.reply({ content: error_message, ephemeral: true });
             } catch (error) { console.error(error) }
@@ -43,7 +44,7 @@ module.exports = {
 
         await update_gambler(gambler);
 
-        let message = `${amount} ${emojis[what]} sold for ${amount * price[what]} ${emojis.gold}.`;
+        let message = `${withCommas(amount)} ${emojis[what]} sold for ${withCommas(amount * price[what])} ${emojis.gold}.`;
         try {
             await interaction.reply({ content: message, ephemeral: true });
         } catch (error) { console.error(error) }

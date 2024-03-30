@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const init_emojis = require("../functions/init_emojis.js");
 const init_gambler = require('../functions/init_gambler.js');
+const { withCommas } = require('../functions/numbers_with_commas');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -9,7 +10,7 @@ module.exports = {
 	async execute(interaction, client) {
         let gambler = await init_gambler(client, interaction.user);
         let emojis = await init_emojis(client);
-        let info = `Gold ${emojis.gold}: ${gambler.gold}\nEctos ${emojis.ecto}: ${gambler.ecto}`;
+        let info = `Gold ${emojis.gold}: ${withCommas(gambler.gold)}\nEctos ${emojis.ecto}: ${withCommas(gambler.ecto)}`;
 
         let today = Math.floor(Date.now() / 86400000);
         if (gambler.free < today) {
@@ -20,18 +21,18 @@ module.exports = {
             info += `\nFree gamble: Available in ${time_remaining}!`;
         }
 
-        info += `\nTotal gambles: ${gambler.gambles}`;
+        info += `\nTotal gambles: ${withCommas(gambler.gambles)}`;
 
         if (gambler.orb) {
-            info += `\nOrbs ${emojis.orb}: ${gambler.orb}`;
+            info += `\nOrbs ${emojis.orb}: ${withCommas(gambler.orb)}`;
         }
 
         if (gambler.jhemonade) {
-            info += `\nJhemonade ${emojis.jhemonade}: ${gambler.jhemonade}`;
+            info += `\nJhemonade ${emojis.jhemonade}: ${withCommas(gambler.jhemonade)}`;
         }
 
         if (gambler.crafted_jhemonade) {
-            info += `\nTotal crafted ${emojis.jhemonade}: ${gambler.crafted_jhemonade}`;
+            info += `\nTotal crafted ${emojis.jhemonade}: ${withCommas(gambler.crafted_jhemonade)}`;
         }
 
         const embed = new EmbedBuilder()

@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const init_gambler = require('../functions/init_gambler.js');
 const update_gambler = require('../functions/update_gambler.js');
 const init_emojis = require("../functions/init_emojis.js");
+const { withCommas } = require('../functions/numbers_with_commas');
 
 /*
 gold:
@@ -181,8 +182,8 @@ module.exports = {
 
         let gold_delta = gambler.gold - old_gold;
         let ecto_delta = gambler.ecto - old_ecto;
-        let gold_difference = gold_delta >= 0 ? "(+" + gold_delta + ")" : "(" + gold_delta + ")";
-        let ecto_difference = ecto_delta >= 0 ? "(+" + ecto_delta + ")" : "(" + ecto_delta + ")";
+        let gold_difference = gold_delta >= 0 ? "(+" + withCommas(gold_delta) + ")" : "(" + withCommas(gold_delta) + ")";
+        let ecto_difference = ecto_delta >= 0 ? "(+" + withCommas(ecto_delta) + ")" : "(" + withCommas(ecto_delta) + ")";
 
         // If the roll made profit or broke even, green color, otherwise red
         let color = gold_value + ecto_value * 0.4 >= 200 * count ? 0x9FE2BF : 0xff7f7f;
@@ -192,7 +193,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`${emojis.ecto} Ectogamble!`)
             .setColor(color)
-            .setDescription(`${gambler.name} receives:\n**${gold}** & **${ecto}**\n${gambles} Total value: ${gold_value}${emojis.gold} & ${ecto_value}${emojis.ecto}.\n\nCurrent balance: \n**${gambler.gold}** ${emojis.gold} ${gold_difference}\n **${gambler.ecto}** ${emojis.ecto} ${ecto_difference}\n\nReact to gamble again! ${emojis.ecto} = 1 gamble, ${emojis.glob} = 2, ${emojis.crystal} = 5, ${emojis.asc_glob} = 10, ${emojis.orb} = 20. React with ${emojis.balance} to balance!`);
+            .setDescription(`${gambler.name} receives:\n**${gold}** & **${ecto}**\n${gambles} Total value: ${withCommas(gold_value)}${emojis.gold} & ${withCommas(ecto_value)}${emojis.ecto}.\n\nCurrent balance: \n**${withCommas(gambler.gold)}** ${emojis.gold} ${gold_difference}\n **${withCommas(gambler.ecto)}** ${emojis.ecto} ${ecto_difference}\n\nReact to gamble again! ${emojis.ecto} = 1 gamble, ${emojis.glob} = 2, ${emojis.crystal} = 5, ${emojis.asc_glob} = 10, ${emojis.orb} = 20. React with ${emojis.balance} to balance!`);
         try {
             if (inside_job) {
                 if (stolen_message) {

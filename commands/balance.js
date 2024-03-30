@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const init_emojis = require("../functions/init_emojis");
 const init_gambler = require("../functions/init_gambler");
 const update_gambler = require("../functions/update_gambler");
+const { withCommas } = require('../functions/numbers_with_commas');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -31,9 +32,9 @@ module.exports = {
         await update_gambler(gambler)
 
         if (delta_ecto < 0) {
-            new_message = `${gambler.name}, you sold ${-1 * delta_ecto}${emojis.ecto} for ${-0.4 * delta_ecto}${emojis.gold}! You now have ${gambler.gold}${emojis.gold} and ${gambler.ecto}${emojis.ecto}.`
+            new_message = `${gambler.name}, you sold ${withCommas(-1 * delta_ecto)}${emojis.ecto} for ${withCommas(-0.4 * delta_ecto)}${emojis.gold}! You now have ${withCommas(gambler.gold)}${emojis.gold} and ${withCommas(gambler.ecto)}${emojis.ecto}.`
         } else if (delta_ecto > 0) {
-            new_message = `${gambler.name}, you bought ${delta_ecto}${emojis.ecto} for ${0.4 * delta_ecto}${emojis.gold}! You now have ${gambler.gold}${emojis.gold} and ${gambler.ecto}${emojis.ecto}.`
+            new_message = `${gambler.name}, you bought ${withCommas(delta_ecto)}${emojis.ecto} for ${withCommas(0.4 * delta_ecto)}${emojis.gold}! You now have ${withCommas(gambler.gold)}${emojis.gold} and ${withCommas(gambler.ecto)}${emojis.ecto}.`
         } else {
             new_message = `${gambler.name}, your ${emojis.ecto} and ${emojis.gold} are already perfectly balanced, as all things should be.`
         }

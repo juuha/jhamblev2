@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const init_emojis = require("../functions/init_emojis.js");
 const init_gambler = require('../functions/init_gambler.js');
 const update_gambler = require("../functions/update_gambler");
+const { withCommas } = require('../functions/numbers_with_commas');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -20,7 +21,7 @@ module.exports = {
 
         let error_message = "";
         if (gambler.orb < 50 * count) {
-            error_message = `To craft ${count} ${emojis.jhemonade} you need ${50 * count} ${emojis.orb}, but you only have ${gambler.orb} ${emojis.orb}!`;
+            error_message = `To craft ${withCommas(count)} ${emojis.jhemonade} you need ${withCommas(50 * count)} ${emojis.orb}, but you only have ${withCommas(gambler.orb)} ${emojis.orb}!`;
         }
 
         if (error_message) {
@@ -37,7 +38,7 @@ module.exports = {
         await update_gambler(gambler);
 
         try {
-            await interaction.reply(`${interaction.user.globalName} crafted ${count} ${emojis.jhemonade}!`);
+            await interaction.reply(`${interaction.user.globalName} crafted ${withCommas(count)} ${emojis.jhemonade}!`);
         } catch (error) { console.error(error) }
     }
 }

@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const init_emojis = require('../functions/init_emojis');
 const init_gambler = require('../functions/init_gambler');
 const gamblers = require('../gamblers.json');
+const { withCommas } = require('../functions/numbers_with_commas');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -35,20 +36,20 @@ module.exports = {
         for (let i = 0; i < max; i++) {
             let g = leaderboard[i];
             names += `${i + 1}.\u2800${g.name}\n`;
-            items += `${g.gold}${emojis.gold}`+
-                `\u2800${g.ecto}${emojis.ecto}`+
-                `\u2800${g.orb}${emojis.orb}`+
-                `\u2800${g.crafted_jhemonade}${emojis.jhemonade}\n`;
-            total_value += `${g.value}${emojis.gold}\n`;
+            items += `${withCommas(g.gold)}${emojis.gold}`+
+                `\u2800${withCommas(g.ecto)}${emojis.ecto}`+
+                `\u2800${withCommas(g.orb)}${emojis.orb}`+
+                `\u2800${withCommas(g.crafted_jhemonade)}${emojis.jhemonade}\n`;
+            total_value += `${withCommas(g.value)}${emojis.gold}\n`;
         }
 
         if (user_rank > max) {
             names += `...\n${user_rank}.\u2800${gambler.name}`;
-            items += `\n${gambler.gold}${emojis.gold}`+
-                `\u2800${gambler.ecto}${emojis.ecto}`+
-                `\u2800${gambler.orb}${emojis.orb}`+
-                `\u2800${gambler.crafted_jhemonade}${emojis.jhemonade}`;
-            total_value += `\n${leaderboard[user_rank-1].value}${emojis.gold}`;
+            items += `\n${withCommas(gambler.gold)}${emojis.gold}`+
+                `\u2800${withCommas(gambler.ecto)}${emojis.ecto}`+
+                `\u2800${withCommas(gambler.orb)}${emojis.orb}`+
+                `\u2800${withCommas(gambler.crafted_jhemonade)}${emojis.jhemonade}`;
+            total_value += `\n${withCommas(leaderboard[user_rank-1].value)}${emojis.gold}`;
         }
 
         const embed = new EmbedBuilder()
