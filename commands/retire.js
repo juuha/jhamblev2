@@ -14,14 +14,7 @@ module.exports = {
             ),
 	async execute(interaction, client) {
 		let who = interaction.options.getUser("retiree");
-        let retiree = {};
-
-        if (gamblers[who.id]) {
-            retiree = gamblers[who.id];
-        } else {
-            retiree = await init_gambler(client, who);
-        }
-
+        let retiree = await init_gambler(client, who)
         retiree.retired = true;
         await update_gambler(retiree);
 
