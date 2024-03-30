@@ -1,12 +1,12 @@
 const fs = require('fs');
 const update_gambler = require('./update_gambler');
 
-module.exports = async (client, gambler, unretire = false) => {
+module.exports = async (client, user, unretire = false) => {
     let gamblers = require('../gamblers.json');
-    if (!gamblers[gambler.id]) {
-        gamblers[gambler.id] = {
-            id: gambler.id,
-            name: gambler.globalName || gambler.username,
+    if (!gamblers[user.id]) {
+        gamblers[user.id] = {
+            id: user.id,
+            name: user.globalName || user.username,
             ecto: 1250,
             gold: 500,
             free: 18706,
@@ -20,7 +20,7 @@ module.exports = async (client, gambler, unretire = false) => {
             if (error) console.error(error);
         })
     }
-    let gambler = gamblers[gambler.id];
+    let gambler = gamblers[user.id];
     if (unretire) {
         gambler.retired = false;
         update_gambler(gambler);
