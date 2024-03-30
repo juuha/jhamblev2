@@ -41,7 +41,7 @@ module.exports = {
             .setDescription(info);
         try {
             await interaction.reply({ embeds: [embed] });
-        } catch (error) { console.log(error) }
+        } catch (error) { console.error(error) }
     }
 }
 
