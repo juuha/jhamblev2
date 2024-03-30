@@ -8,12 +8,15 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('leaderboard')
 		.setDescription('Show the ectogambling leaderboard!'),
-	async execute(interaction, client) {
+	async execute(interaction, client, hall_of_monuments) {
         let gambler = await init_gambler(client, interaction.user);
         let leaderboard = [];
 
         for (let id in gamblers) {
             let g = gamblers[id];
+            if (!hall_of_monuments) {
+                if (g.retired) continue;
+            }
             leaderboard.push({
                 name: g.name,
                 gold: g.gold,
@@ -30,34 +33,54 @@ module.exports = {
         let user_rank = leaderboard.findIndex(g => g.name === gambler.name) + 1;
         let emojis = await init_emojis(client);
         let names = "";
+        // Left here in case want to change the format again
+        //let gold = "";
+        //let ectos = "";
+        //let orbs = "";
         let items = "";
+        let crafted = "";
         let total_value = "";
 
         for (let i = 0; i < max; i++) {
             let g = leaderboard[i];
             names += `${i + 1}.\u2800${g.name}\n`;
+            // Left here in case want to change the format again
+            //gold += `${withCommas(g.gold)}${emojis.gold}\n`;
+            //ectos += `${withCommas(g.ecto)}${emojis.ecto}\n`;
+            //orbs  +=  `${withCommas(g.orb)}${emojis.orb}\n`;
             items += `${withCommas(g.gold)}${emojis.gold}`+
                 `\u2800${withCommas(g.ecto)}${emojis.ecto}`+
-                `\u2800${withCommas(g.orb)}${emojis.orb}`+
-                `\u2800${withCommas(g.crafted_jhemonade)}${emojis.jhemonade}\n`;
+                `\u2800${withCommas(g.orb)}${emojis.orb}\n`;
+            crafted += `${withCommas(g.crafted_jhemonade)}${emojis.jhemonade}\n`;
             total_value += `${withCommas(g.value)}${emojis.gold}\n`;
         }
 
         if (user_rank > max) {
             names += `...\n${user_rank}.\u2800${gambler.name}`;
-            items += `\n${withCommas(gambler.gold)}${emojis.gold}`+
+            // Left here in case want to change the format again
+            //gold += `...\n${withCommas(gambler.gold)}${emojis.gold}`;
+            //ectos += `...\n${withCommas(gambler.ecto)}${emojis.ecto}`;
+            //orbs += `...\n${withCommas(gambler.orb)}${emojis.orb}`;
+            items += `${withCommas(gambler.gold)}${emojis.gold}`+
                 `\u2800${withCommas(gambler.ecto)}${emojis.ecto}`+
-                `\u2800${withCommas(gambler.orb)}${emojis.orb}`+
-                `\u2800${withCommas(gambler.crafted_jhemonade)}${emojis.jhemonade}`;
-            total_value += `\n${withCommas(leaderboard[user_rank-1].value)}${emojis.gold}`;
+                `\u2800${withCommas(gambler.orb)}${emojis.orb}\n`;
+            crafted += `...\n${withCommas(gambler.crafted_jhemonade)}${emojis.jhemonade}`;
+            total_value += `...\n${withCommas(leaderboard[user_rank-1].value)}${emojis.gold}`;
         }
 
+        let title = !hall_of_monuments ? `${emojis.ecto} Leaderboard ${emojis.ecto}` : `🏛️ Hall of Monuments 🏛️`;
+
         const embed = new EmbedBuilder()
-            .setTitle(`${emojis.ecto} Leaderboard ${emojis.ecto}`)
+            .setTitle(title)
             .addFields(
                 { name: 'Name', value: names, inline: true },
-                { name: `Current ${emojis.gold} ${emojis.ecto} ${emojis.orb} & Crafted ${emojis.jhemonade}`, value: items, inline: true },
+                { name: `Crafted ${emojis.jhemonade}`, value: crafted, inline: true },
                 { name: 'Total value', value: total_value, inline: true },
+                { name: 'Gold, Ectos and Orbs', value: items, inline: true},
+                // Left here in case want to change the format again
+                //{ name: `Gold ${emojis.gold}`, value: gold, inline: true },
+                //{ name: `Ectos ${emojis.ecto}`, value: ectos, inline: true },
+                //{ name: `Orbs ${emojis.orb}`, value: orbs, inline: true },
             )
             .setColor(0xffd700);
 
