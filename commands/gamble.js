@@ -195,21 +195,23 @@ module.exports = {
             .setColor(color)
             .setDescription(`${gambler.name} receives:\n**${gold}** & **${ecto}**\n${gambles} Total value: ${withCommas(gold_value)}${emojis.gold} & ${withCommas(ecto_value)}${emojis.ecto}.\n\nCurrent balance: \n**${withCommas(gambler.gold)}** ${emojis.gold} ${gold_difference}\n **${withCommas(gambler.ecto)}** ${emojis.ecto} ${ecto_difference}\n\nReact to gamble again! ${emojis.ecto} = 1 gamble, ${emojis.glob} = 2, ${emojis.crystal} = 5, ${emojis.asc_glob} = 10, ${emojis.orb} = 20. React with ${emojis.balance} to balance!`);
         try {
+            let message = null;
             if (inside_job) {
                 if (stolen_message) {
-                    interaction.message.channel.send({ embeds: [embed] });
+                    message = await interaction.message.channel.send({ embeds: [embed], fetchReply: true });
                 } else {
-                    interaction.message.edit({ embeds: [embed] });
+                    await interaction.message.edit({ embeds: [embed] });
+                    return;
                 }
             } else {
-                    const message = await interaction.reply({ embeds: [embed], fetchReply: true });
-                    await message.react(emojis.ecto);
-                    await message.react(emojis.glob);
-                    await message.react(emojis.crystal);
-                    await message.react(emojis.asc_glob);
-                    await message.react(emojis.orb);
-                    await message.react(emojis.balance);
+                    message = await interaction.reply({ embeds: [embed], fetchReply: true });       
             }
+            await message.react(emojis.ecto);
+            await message.react(emojis.glob);
+            await message.react(emojis.crystal);
+            await message.react(emojis.asc_glob);
+            await message.react(emojis.orb);
+            await message.react(emojis.balance);
         } catch (error) { console.error(error) }
 	},
 };
