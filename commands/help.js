@@ -11,7 +11,7 @@ module.exports = {
             .setDescription(`**/gamble <amount>** - Ectogambles the declared amount. Defaults to one gamble if amount `+
                     `left empty, max 20 gambles at a time. You can also click on one of the reactions that will appear to gamble.\n `+
                 `**/me** - Shows information about yourself. \n `+
-                `**/balance** - Evens out ecto and gold amounts, so they have roughly the same value.`+
+                `**/balance** - Evens out ecto and gold amounts, so they have roughly the same value.\n`+
                 `**/buy <amount>** - Used for buying ectos if you have too much gold and too few ectos.\n`+
                 `**/sell <amount> <what>** - You can sell ectos and orbs if you have too many of those and too little gold.\n`+
                 `**/give <@who> <amount> <what>** - If your friend has too few of something, you can help them out. (ectos, orbs, gold, jhemonade)\n`+
