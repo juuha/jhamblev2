@@ -15,7 +15,7 @@ module.exports = {
                 `**/buy <amount>** - Used for buying ectos if you have too much gold and too few ectos.\n`+
                 `**/sell <amount> <what>** - You can sell ectos and orbs if you have too many of those and too little gold.\n`+
                 `**/give <@who> <amount> <what>** - If your friend has too few of something, you can help them out. (ectos, orbs, gold, jhemonade)\n`+
-                `**/craft <amount>** - Crafts 1 jhemonade using 50 orbs!\n`+
+                `**/craft <amount>** - Crafts given amount of jhemonade for 50 orbs each!\n`+
                 `**/leaderboard** - Shows the current top ecto gamblers (and you if you aren't in the top 5).\n`+
                 `**/hallofmonuments** - Shows the ectogambling leaderboard including retired gamblers.\n`+
                 `**/retire <@who>** - Retires a gambler if they no longer play and should not be on the leaderboard.`+
