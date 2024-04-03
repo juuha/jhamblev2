@@ -99,6 +99,12 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
 				case "⚖️":
 					command = "balance";
 					break;
+				case "📜":
+					command = "me";
+					break;
+				case "🏆":
+					command = "leaderboard";
+					break;
 				default:
 					return;
 			}
@@ -120,7 +126,12 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
 					client.commands.get('gamble').execute(reaction, client, inside_job = true, count, user, stolen_message);
 					break;
 				case "balance":
-					client.commands.get('balance').execute(reaction, client, inside_job = true, user, stolen_message)
+					client.commands.get('balance').execute(reaction, client, inside_job = true, user, stolen_message);
+					break;
+				case "me":
+					client.commands.get('me').execute(reaction, client, inside_job = true, user);
+					break;
+				case "leaderboard":
 					break;
 				default:
 					return;

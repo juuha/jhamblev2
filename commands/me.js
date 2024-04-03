@@ -7,8 +7,12 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('me')
 		.setDescription('Show information about your-Ectogambling-self.'),
-	async execute(interaction, client) {
-        let gambler = await init_gambler(client, interaction.user, unretire = true);
+    // interaction is a Discord.MessageReaction when inside_job = true, otherwise it is a Discord.Interaction
+	async execute(interaction, client, inside_job = false, user) {
+        if (!inside_job) {
+            user = interaction.user;
+        }
+        let gambler = await init_gambler(client, user, unretire = true);
         let emojis = await init_emojis(client);
         let info = `Gold ${emojis.gold}: ${withCommas(gambler.gold)}\nEctos ${emojis.ecto}: ${withCommas(gambler.ecto)}`;
 
@@ -40,7 +44,11 @@ module.exports = {
             .setColor(0x00FFFF)
             .setDescription(info);
         try {
-            await interaction.reply({ embeds: [embed] });
+            if (inside_job) {
+                await interaction.message.channel.send({ embeds: [embed] });
+            } else {
+                await interaction.reply({ embeds: [embed] });
+            }
         } catch (error) { console.error(error) }
     }
 }

@@ -193,7 +193,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle(`${emojis.ecto} Ectogamble!`)
             .setColor(color)
-            .setDescription(`${gambler.name} receives:\n**${gold}** & **${ecto}**\n${gambles} Total value: ${withCommas(gold_value)}${emojis.gold} & ${withCommas(ecto_value)}${emojis.ecto}.\n\nCurrent balance: \n**${withCommas(gambler.gold)}** ${emojis.gold} ${gold_difference}\n **${withCommas(gambler.ecto)}** ${emojis.ecto} ${ecto_difference}\n\nReact to gamble again! ${emojis.ecto} = 1 gamble, ${emojis.glob} = 2, ${emojis.crystal} = 5, ${emojis.asc_glob} = 10, ${emojis.orb} = 20. React with ${emojis.balance} to balance!`);
+            .setDescription(`${gambler.name} receives:\n**${gold}** & **${ecto}**\n${gambles} Total value: ${withCommas(gold_value)}${emojis.gold} & ${withCommas(ecto_value)}${emojis.ecto}.\n\nCurrent balance: \n**${withCommas(gambler.gold)}** ${emojis.gold} ${gold_difference}\n **${withCommas(gambler.ecto)}** ${emojis.ecto} ${ecto_difference}\n\nReact to gamble again! ${emojis.ecto} = 1 gamble, ${emojis.glob} = 2, ${emojis.crystal} = 5, ${emojis.asc_glob} = 10, ${emojis.orb} = 20. \nOthers reactions: ${emojis.balance}Balance, ${emojis.me}Me & ${emojis.leaderboard} Leaderboard.`);
         try {
             let message = null;
             if (inside_job) {
@@ -212,6 +212,8 @@ module.exports = {
             await message.react(emojis.asc_glob);
             await message.react(emojis.orb);
             await message.react(emojis.balance);
+            await message.react(emojis.me);
+            await message.react(emojis.leaderboard);
         } catch (error) { console.error(error) }
 	},
 };

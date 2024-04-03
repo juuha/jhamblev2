@@ -27,6 +27,8 @@ module.exports = async (client) => {
 
     emojis.jhemonade = "🍹";
     emojis.balance = "⚖️";
+    emojis.me = "📜";
+    emojis.leaderboard = "🏆";
 
     return emojis;
 }
