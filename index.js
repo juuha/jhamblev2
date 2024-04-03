@@ -132,6 +132,7 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
 					client.commands.get('me').execute(reaction, client, inside_job = true, user);
 					break;
 				case "leaderboard":
+					client.commands.get('leaderboard').execute(reaction, client, hall_of_monuments = false, inside_job = true, user);
 					break;
 				default:
 					return;

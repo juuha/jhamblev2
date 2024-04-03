@@ -8,8 +8,12 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('leaderboard')
 		.setDescription('Show the ectogambling leaderboard!'),
-	async execute(interaction, client, hall_of_monuments) {
-        let gambler = await init_gambler(client, interaction.user, unretire = true);
+    // interaction is a Discord.MessageReaction when inside_job = true, otherwise it is a Discord.Interaction
+	async execute(interaction, client, hall_of_monuments, inside_job = false, user) {
+        if (!inside_job) {
+            user = interaction.user;
+        }
+        let gambler = await init_gambler(client, user, unretire = true);
         let leaderboard = [];
 
         for (let id in gamblers) {
@@ -84,8 +88,12 @@ module.exports = {
             )
             .setColor(0xffd700);
 
-        try {;
-            interaction.reply({ embeds: [embed] });
+        try {
+            if (inside_job) {
+                await interaction.message.channel.send({ embeds: [embed] });
+            } else {
+                await interaction.reply({ embeds: [embed] });
+            }
         } catch (error) { console.error(error) };
     }
 }
